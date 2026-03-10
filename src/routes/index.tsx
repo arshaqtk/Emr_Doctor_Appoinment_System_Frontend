@@ -9,6 +9,7 @@ import { ManageUsersPage } from '@/features/admin/pages/ManageUsersPage'
 import { DoctorSchedulePage } from '@/features/doctors/pages/DoctorSchedulePage'
 import { PatientListPage } from '@/features/patients/pages/PatientListPage'
 import { CreatePatientPage } from '@/features/patients/pages/CreatePatientPage'
+import { MyAppointmentsPage } from '@/features/appointments/pages/MyAppointmentsPage'
 
 export const router = createBrowserRouter([
     {
@@ -37,6 +38,10 @@ export const router = createBrowserRouter([
                     {
                         path: 'patients/create',
                         element: <CreatePatientPage />,
+                    },
+                    {
+                        path: 'appointments/my',
+                        element: <MyAppointmentsPage />,
                     },
                     {
                         path: 'appointments/book',
