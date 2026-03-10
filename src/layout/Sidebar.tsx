@@ -1,9 +1,10 @@
 import { Link, useLocation } from 'react-router-dom'
-import { LayoutDashboard, Calendar, UserPlus, Clock, Stethoscope, Users } from 'lucide-react'
+import { LayoutDashboard, Calendar, UserPlus, Clock, Stethoscope, Users, UsersRound } from 'lucide-react'
 import { useAuthStore } from '@/features/auth/store/auth.store'
 
 const navItems = [
     { label: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
+    { label: 'Patients', icon: UsersRound, path: '/patients' },
     { label: 'Create Patient', icon: UserPlus, path: '/patients/create' },
     { label: 'Book Appointment', icon: Calendar, path: '/appointments/book' },
     { label: 'Doctor Schedule', icon: Clock, path: '/doctors/schedule' },

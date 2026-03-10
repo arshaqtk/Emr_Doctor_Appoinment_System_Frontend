@@ -7,6 +7,8 @@ import { MainLayout } from '@/layout/MainLayout'
 import { ManageDoctorsPage } from '@/features/admin/pages/ManageDoctorsPage'
 import { ManageUsersPage } from '@/features/admin/pages/ManageUsersPage'
 import { DoctorSchedulePage } from '@/features/doctors/pages/DoctorSchedulePage'
+import { PatientListPage } from '@/features/patients/pages/PatientListPage'
+import { CreatePatientPage } from '@/features/patients/pages/CreatePatientPage'
 
 export const router = createBrowserRouter([
     {
@@ -29,8 +31,12 @@ export const router = createBrowserRouter([
                         element: <DashboardPage />,
                     },
                     {
+                        path: 'patients',
+                        element: <PatientListPage />,
+                    },
+                    {
                         path: 'patients/create',
-                        element: <div className="p-8"><h1 className="text-2xl font-bold">Create Patient</h1></div>,
+                        element: <CreatePatientPage />,
                     },
                     {
                         path: 'appointments/book',
@@ -63,4 +69,3 @@ export const router = createBrowserRouter([
         element: <Navigate to="/login" replace />,
     },
 ])
-
