@@ -37,13 +37,6 @@ export const LoginPage = () => {
                     </div>
                     <span className="text-xl font-bold text-gray-900 tracking-tight">MedConnect</span>
                 </div>
-                <div className="flex items-center gap-6 text-sm">
-                    <a href="#" className="text-gray-500 hover:text-gray-800 font-medium transition-colors">Help Center</a>
-                    <a href="#" className="text-gray-500 hover:text-gray-800 font-medium transition-colors">Privacy</a>
-                    <button className="bg-primary-500 hover:bg-primary-600 text-white px-5 py-2 rounded-md font-semibold transition-colors text-sm">
-                        Support
-                    </button>
-                </div>
             </nav>
 
             {/* Main Content */}
