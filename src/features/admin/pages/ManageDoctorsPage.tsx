@@ -80,7 +80,6 @@ export const ManageDoctorsPage = () => {
     // Filter users to only unassigned DOCTOR accounts
     const assignedUserIds = new Set(doctors.map(d => typeof d.user === 'object' ? d.user._id : d.user));
     const availableDoctorUsers = users.filter(u => u.role === 'DOCTOR' && !assignedUserIds.has(u._id));
-console.log(availableDoctorUsers)
     return (
         <div className="p-6 max-w-7xl mx-auto space-y-6">
             <div className="flex justify-between items-center bg-white p-6 rounded-lg shadow-sm border border-gray-100">

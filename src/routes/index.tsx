@@ -6,6 +6,7 @@ import { RoleProtectedRoute } from './RoleProtectedRoute'
 import { MainLayout } from '@/layout/MainLayout'
 import { ManageDoctorsPage } from '@/features/admin/pages/ManageDoctorsPage'
 import { ManageUsersPage } from '@/features/admin/pages/ManageUsersPage'
+import { DoctorSchedulePage } from '@/features/doctors/pages/DoctorSchedulePage'
 
 export const router = createBrowserRouter([
     {
@@ -37,7 +38,7 @@ export const router = createBrowserRouter([
                     },
                     {
                         path: 'doctors/schedule',
-                        element: <div className="p-8"><h1 className="text-2xl font-bold">Doctor Schedule</h1></div>,
+                        element: <DoctorSchedulePage />,
                     },
                     // Super Admin protected routes
                     {
