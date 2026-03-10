@@ -2,7 +2,10 @@ import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { LoginPage } from '@/features/auth/pages/LoginPage'
 import { DashboardPage } from '@/features/dashboard/pages/DashboardPage'
 import { ProtectedRoute } from './ProtectedRoute'
+import { RoleProtectedRoute } from './RoleProtectedRoute'
 import { MainLayout } from '@/layout/MainLayout'
+import { ManageDoctorsPage } from '@/features/admin/pages/ManageDoctorsPage'
+import { ManageUsersPage } from '@/features/admin/pages/ManageUsersPage'
 
 export const router = createBrowserRouter([
     {
@@ -36,6 +39,20 @@ export const router = createBrowserRouter([
                         path: 'doctors/schedule',
                         element: <div className="p-8"><h1 className="text-2xl font-bold">Doctor Schedule</h1></div>,
                     },
+                    // Super Admin protected routes
+                    {
+                        element: <RoleProtectedRoute allowedRoles={['SUPER_ADMIN']} />,
+                        children: [
+                            {
+                                path: 'admin/doctors',
+                                element: <ManageDoctorsPage />,
+                            },
+                            {
+                                path: 'admin/users',
+                                element: <ManageUsersPage />,
+                            },
+                        ],
+                    },
                 ],
             },
         ],
@@ -45,3 +62,4 @@ export const router = createBrowserRouter([
         element: <Navigate to="/login" replace />,
     },
 ])
+
