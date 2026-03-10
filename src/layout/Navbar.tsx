@@ -1,7 +1,7 @@
 import { useAuthStore } from '@/features/auth/store/auth.store'
 import { authService } from '@/features/auth/services/auth.api'
 import { useNavigate } from 'react-router-dom'
-import { LogOut, Bell } from 'lucide-react'
+import { LogOut } from 'lucide-react'
 
 export const Navbar = () => {
     const { user, logout } = useAuthStore()
@@ -32,12 +32,7 @@ export const Navbar = () => {
             </div>
 
             <div className="flex items-center gap-4">
-                <button className="p-2 text-gray-500 hover:bg-gray-100 rounded-full transition-colors relative">
-                    <Bell size={20} />
-                    <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white" />
-                </button>
-
-                <div className="flex items-center gap-3 pl-4 border-l border-gray-200">
+                <div className="flex items-center gap-3">
                     <div className="text-right hidden sm:block">
                         <p className="text-sm font-semibold text-gray-800">{user?.name}</p>
                         <p className="text-xs text-gray-500 capitalize">{user?.role.toLowerCase().replace('_', ' ')}</p>

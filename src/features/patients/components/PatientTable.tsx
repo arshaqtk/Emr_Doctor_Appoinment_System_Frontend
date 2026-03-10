@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import type { Patient } from '../types/patient.types';
 
 interface PatientTableProps {
@@ -24,7 +23,6 @@ export const PatientTable = ({
     limit,
     onPageChange,
 }: PatientTableProps) => {
-    const navigate = useNavigate();
     const totalPages = Math.ceil(total / limit);
 
     return (

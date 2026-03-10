@@ -1,7 +1,29 @@
+export interface Slot {
+    time: string;                       
+    isBooked: boolean;
+    status: 'available' | 'booked';
+}
 
 export type AppointmentStatus = 'BOOKED' | 'ARRIVED';
 
-// Matches backend IAppointment with populated doctor and patient
+export interface CreateAppointmentPayload {
+    doctorId: string;
+    date: string;           
+    time: string;           
+    patientType: 'EXISTING' | 'NEW';
+    patientId?: string;     
+    patientData?: {         
+        name: string;
+        mobile: string;
+        email?: string;
+        gender?: string;
+        age?: number;
+    };
+    purpose?: string;
+    notes?: string;
+}
+
+// ── Populated Appointment ───────────────────────────────────────────────────
 export interface Appointment {
     _id: string;
     doctor: {
@@ -16,8 +38,8 @@ export interface Appointment {
         mobile: string;
         patientId: string;
     };
-    date: string;       // YYYY-MM-DD
-    time: string;       // HH:mm
+    date: string;
+    time: string;
     purpose?: string;
     notes?: string;
     status: AppointmentStatus;

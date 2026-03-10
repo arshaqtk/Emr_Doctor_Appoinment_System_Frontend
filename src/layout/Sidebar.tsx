@@ -1,17 +1,14 @@
 import { Link, useLocation } from 'react-router-dom'
-import { LayoutDashboard, Calendar, UserPlus, Clock, Stethoscope, Users, UsersRound, CalendarCheck } from 'lucide-react'
+import { Calendar, UserPlus, Clock, Stethoscope, Users, UsersRound, CalendarCheck, ClipboardList } from 'lucide-react'
 import { useAuthStore } from '@/features/auth/store/auth.store'
 
-// Common to all roles
-const commonNavItems = [
-    { label: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
-]
 
 // Receptionist / Admin visible items
 const staffNavItems = [
+    { label: 'Booked Appointments', icon: ClipboardList, path: '/appointments' },
+    { label: 'Book Appointment', icon: Calendar, path: '/appointments/book' },
     { label: 'Patients', icon: UsersRound, path: '/patients' },
     { label: 'Create Patient', icon: UserPlus, path: '/patients/create' },
-    { label: 'Book Appointment', icon: Calendar, path: '/appointments/book' },
     { label: 'Doctor Schedule', icon: Clock, path: '/doctors/schedule' },
 ]
 
@@ -55,13 +52,9 @@ export const Sidebar = () => {
     return (
         <aside className="fixed left-0 top-16 w-64 h-[calc(100vh-64px)] bg-white border-r border-gray-200 p-4 overflow-y-auto">
             <nav className="space-y-1">
-                {/* Dashboard — everyone sees this */}
-                {commonNavItems.map(item => <NavLink key={item.path} item={item} />)}
-
                 {/* Doctor view — only doctor-relevant links */}
                 {isDoctor && (
                     <>
-                        <SectionLabel label="Doctor" />
                         {doctorNavItems.map(item => <NavLink key={item.path} item={item} />)}
                     </>
                 )}

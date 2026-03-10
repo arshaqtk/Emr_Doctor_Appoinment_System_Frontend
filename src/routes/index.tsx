@@ -1,6 +1,6 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { LoginPage } from '@/features/auth/pages/LoginPage'
-import { DashboardPage } from '@/features/dashboard/pages/DashboardPage'
+import { RootRedirect } from './RootRedirect'
 import { ProtectedRoute } from './ProtectedRoute'
 import { RoleProtectedRoute } from './RoleProtectedRoute'
 import { MainLayout } from '@/layout/MainLayout'
@@ -10,6 +10,8 @@ import { DoctorSchedulePage } from '@/features/doctors/pages/DoctorSchedulePage'
 import { PatientListPage } from '@/features/patients/pages/PatientListPage'
 import { CreatePatientPage } from '@/features/patients/pages/CreatePatientPage'
 import { MyAppointmentsPage } from '@/features/appointments/pages/MyAppointmentsPage'
+import { BookAppointmentPage } from '@/features/appointments/pages/BookAppointmentPage'
+import { AppointmentsListPage } from '@/features/appointments/pages/AppointmentsListPage'
 
 export const router = createBrowserRouter([
     {
@@ -25,11 +27,11 @@ export const router = createBrowserRouter([
                 children: [
                     {
                         index: true,
-                        element: <Navigate to="/dashboard" replace />,
+                        element: <RootRedirect />,
                     },
                     {
                         path: 'dashboard',
-                        element: <DashboardPage />,
+                        element: <RootRedirect />,
                     },
                     {
                         path: 'patients',
@@ -45,7 +47,11 @@ export const router = createBrowserRouter([
                     },
                     {
                         path: 'appointments/book',
-                        element: <div className="p-8"><h1 className="text-2xl font-bold">Book Appointment</h1></div>,
+                        element: <BookAppointmentPage />,
+                    },
+                    {
+                        path: 'appointments',
+                        element: <AppointmentsListPage />,
                     },
                     {
                         path: 'doctors/schedule',
