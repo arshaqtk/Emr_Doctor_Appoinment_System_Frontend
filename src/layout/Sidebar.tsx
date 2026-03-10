@@ -1,15 +1,27 @@
 import { Link, useLocation } from 'react-router-dom'
-import { LayoutDashboard, Calendar, UserPlus, Clock, Stethoscope, Users, UsersRound } from 'lucide-react'
+import { LayoutDashboard, Calendar, UserPlus, Clock, Stethoscope, Users, UsersRound, CalendarCheck } from 'lucide-react'
 import { useAuthStore } from '@/features/auth/store/auth.store'
 
-const navItems = [
+// Common to all roles
+const commonNavItems = [
     { label: 'Dashboard', icon: LayoutDashboard, path: '/dashboard' },
+]
+
+// Receptionist / Admin visible items
+const staffNavItems = [
     { label: 'Patients', icon: UsersRound, path: '/patients' },
     { label: 'Create Patient', icon: UserPlus, path: '/patients/create' },
     { label: 'Book Appointment', icon: Calendar, path: '/appointments/book' },
     { label: 'Doctor Schedule', icon: Clock, path: '/doctors/schedule' },
 ]
 
+// Doctor-only items
+const doctorNavItems = [
+    { label: 'My Appointments', icon: CalendarCheck, path: '/appointments/my' },
+    { label: 'My Schedule', icon: Clock, path: '/doctors/schedule' },
+]
+
+// Super Admin-only items
 const adminNavItems = [
     { label: 'Manage Doctors', icon: Stethoscope, path: '/admin/doctors' },
     { label: 'Manage Users', icon: Users, path: '/admin/users' },
@@ -18,6 +30,7 @@ const adminNavItems = [
 export const Sidebar = () => {
     const { pathname } = useLocation()
     const { user } = useAuthStore()
+    const isDoctor = user?.role === 'DOCTOR'
     const isSuperAdmin = user?.role === 'SUPER_ADMIN'
 
     const linkClass = (path: string) =>
@@ -26,27 +39,45 @@ export const Sidebar = () => {
             : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
         }`
 
-    return (
-        <aside className="fixed left-0 top-16 w-64 h-[calc(100vh-64px)] bg-white border-r border-gray-200 p-4 transition-all duration-300">
-            <nav className="space-y-1">
-                {navItems.map((item) => (
-                    <Link key={item.path} to={item.path} className={linkClass(item.path)}>
-                        <item.icon size={18} className={pathname === item.path ? 'text-primary-600' : 'text-gray-400'} />
-                        {item.label}
-                    </Link>
-                ))}
+    const NavLink = ({ item }: { item: { label: string; icon: any; path: string } }) => (
+        <Link to={item.path} className={linkClass(item.path)}>
+            <item.icon size={18} className={pathname === item.path ? 'text-primary-600' : 'text-gray-400'} />
+            {item.label}
+        </Link>
+    )
 
+    const SectionLabel = ({ label }: { label: string }) => (
+        <div className="pt-4 pb-1 px-4">
+            <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">{label}</p>
+        </div>
+    )
+
+    return (
+        <aside className="fixed left-0 top-16 w-64 h-[calc(100vh-64px)] bg-white border-r border-gray-200 p-4 overflow-y-auto">
+            <nav className="space-y-1">
+                {/* Dashboard — everyone sees this */}
+                {commonNavItems.map(item => <NavLink key={item.path} item={item} />)}
+
+                {/* Doctor view — only doctor-relevant links */}
+                {isDoctor && (
+                    <>
+                        <SectionLabel label="Doctor" />
+                        {doctorNavItems.map(item => <NavLink key={item.path} item={item} />)}
+                    </>
+                )}
+
+                {/* Staff view — receptionist, super admin */}
+                {!isDoctor && (
+                    <>
+                        {staffNavItems.map(item => <NavLink key={item.path} item={item} />)}
+                    </>
+                )}
+
+                {/* Super Admin extras */}
                 {isSuperAdmin && (
                     <>
-                        <div className="pt-4 pb-1 px-4">
-                            <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Super Admin</p>
-                        </div>
-                        {adminNavItems.map((item) => (
-                            <Link key={item.path} to={item.path} className={linkClass(item.path)}>
-                                <item.icon size={18} className={pathname === item.path ? 'text-primary-600' : 'text-gray-400'} />
-                                {item.label}
-                            </Link>
-                        ))}
+                        <SectionLabel label="Super Admin" />
+                        {adminNavItems.map(item => <NavLink key={item.path} item={item} />)}
                     </>
                 )}
             </nav>
