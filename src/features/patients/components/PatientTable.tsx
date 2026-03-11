@@ -82,7 +82,7 @@ export const PatientTable = ({
                                     </div>
                                 </td>
                             </tr>
-                        ) : patients.length === 0 ? (
+                        ) : (patients || []).length === 0 ? (
                             <tr>
                                 <td colSpan={7} className="py-16 text-center">
                                     <div className="flex flex-col items-center gap-2 text-gray-400">

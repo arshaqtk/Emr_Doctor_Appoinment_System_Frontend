@@ -21,7 +21,7 @@ export const UserTable = ({ users, onToggleStatus, onUpdateRole }: UserTableProp
                     </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
-                    {users.length === 0 ? (
+                    {(users || []).length === 0 ? (
                         <tr>
                             <td colSpan={6} className="px-6 py-8 text-center text-gray-500">
                                 No users found.
@@ -47,8 +47,8 @@ export const UserTable = ({ users, onToggleStatus, onUpdateRole }: UserTableProp
                                 <td className="px-6 py-4">
                                     <span
                                         className={`px-2.5 py-1 rounded-full text-xs font-medium ${user.isActive
-                                                ? 'bg-green-100 text-green-700'
-                                                : 'bg-red-100 text-red-700'
+                                            ? 'bg-green-100 text-green-700'
+                                            : 'bg-red-100 text-red-700'
                                             }`}
                                     >
                                         {user.isActive ? 'Active' : 'Inactive'}
@@ -58,8 +58,8 @@ export const UserTable = ({ users, onToggleStatus, onUpdateRole }: UserTableProp
                                     <button
                                         onClick={() => onToggleStatus(user._id, user.isActive)}
                                         className={`text-xs px-3 py-1 border rounded-md transition-colors ${user.isActive
-                                                ? 'text-red-600 border-red-200 hover:bg-red-50'
-                                                : 'text-green-600 border-green-200 hover:bg-green-50'
+                                            ? 'text-red-600 border-red-200 hover:bg-red-50'
+                                            : 'text-green-600 border-green-200 hover:bg-green-50'
                                             }`}
                                     >
                                         {user.isActive ? 'Deactivate' : 'Activate'}
