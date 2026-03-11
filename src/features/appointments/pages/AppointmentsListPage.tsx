@@ -1,16 +1,30 @@
 import { useEffect, useState, useCallback } from 'react';
+import { useLocation } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 import api from '@/lib/api';
 import { AppointmentFilters } from '../components/AppointmentFilters';
 import { AppointmentTable } from '../components/AppointmentTable';
+import { appointmentService } from '../services/appointment.api';
 import type { Appointment, AppointmentsResponse } from '../types/appointment.types';
 
 const LIMIT = 20;
 
 export const AppointmentsListPage = () => {
+    const location = useLocation();
+
     // Filters
     const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
     const [statusFilter, setStatusFilter] = useState('');
     const [page, setPage] = useState(1);
+
+
+    useEffect(() => {
+        if (location.state?.successMsg) {
+            toast.success(location.state.successMsg);
+            // Clear state so toast doesn't show on refresh
+            window.history.replaceState({}, document.title);
+        }
+    }, [location.state]);
 
     // Appointments data
     const [appointments, setAppointments] = useState<Appointment[]>([]);
@@ -46,6 +60,16 @@ export const AppointmentsListPage = () => {
         setStatusFilter('');
     };
 
+    const handleMarkArrived = async (id: string) => {
+        try {
+            await appointmentService.markArrived(id);
+            toast.success('Patient marked as arrived!');
+            fetchAppointments();
+        } catch (err: any) {
+            toast.error(err.response?.data?.message || 'Failed to update status');
+        }
+    };
+
     return (
         <div className="p-6 max-w-6xl mx-auto space-y-5">
             <div>
@@ -70,6 +94,7 @@ export const AppointmentsListPage = () => {
                 page={page}
                 limit={LIMIT}
                 onPageChange={setPage}
+                onMarkArrived={handleMarkArrived}
             />
         </div>
     );

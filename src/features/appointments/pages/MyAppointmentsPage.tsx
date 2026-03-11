@@ -1,5 +1,7 @@
 import { useEffect, useState, useCallback } from 'react';
+import { toast } from 'react-hot-toast';
 import api from '@/lib/api';
+import { appointmentService } from '../services/appointment.api';
 import { useAuthStore } from '@/features/auth/store/auth.store';
 import { AppointmentFilters } from '../components/AppointmentFilters';
 import { AppointmentTable } from '../components/AppointmentTable';
@@ -62,6 +64,16 @@ export const MyAppointmentsPage = () => {
         setStatusFilter('');
     };
 
+    const handleMarkArrived = async (id: string) => {
+        try {
+            await appointmentService.markArrived(id);
+            toast.success('Patient marked as arrived!');
+            fetchAppointments();
+        } catch (err: any) {
+            toast.error(err.response?.data?.message || 'Failed to update status');
+        }
+    };
+
     if (profileError) {
         return (
             <div className="p-6">
@@ -99,6 +111,7 @@ export const MyAppointmentsPage = () => {
                 page={page}
                 limit={LIMIT}
                 onPageChange={setPage}
+                onMarkArrived={handleMarkArrived}
             />
         </div>
     );
