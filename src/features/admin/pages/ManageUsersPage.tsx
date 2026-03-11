@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { toast } from 'react-hot-toast';
 import type { User, CreateUserPayload } from '../types/admin.types';
 import { adminApi } from '../services/admin.api';
 import { UserTable } from '../components/UserTable';
@@ -32,7 +33,7 @@ export const ManageUsersPage = () => {
             await adminApi.patchUser(id, { isActive: !currentIsActive });
             loadUsers();
         } catch (err: any) {
-            alert('Failed to update status');
+            toast.error('Failed to update status');
         }
     };
 
@@ -41,7 +42,7 @@ export const ManageUsersPage = () => {
             await adminApi.patchUser(id, { role: newRole as Exclude<User['role'], 'SUPER_ADMIN'> });
             loadUsers();
         } catch (err: any) {
-            alert('Failed to update role');
+            toast.error('Failed to update role');
         }
     };
 
@@ -56,7 +57,7 @@ export const ManageUsersPage = () => {
             setShowForm(false);
             loadUsers();
         } catch (err: any) {
-            alert(err.response?.data?.message || 'Failed to create user');
+            toast.error(err.response?.data?.message || 'Failed to create user');
         } finally {
             setIsLoading(false);
         }

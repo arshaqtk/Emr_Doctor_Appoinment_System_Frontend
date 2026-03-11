@@ -1,4 +1,6 @@
 import { useEffect, useState, useCallback } from 'react';
+import { useLocation } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 import api from '@/lib/api';
 import { AppointmentFilters } from '../components/AppointmentFilters';
 import { AppointmentTable } from '../components/AppointmentTable';
@@ -7,10 +9,21 @@ import type { Appointment, AppointmentsResponse } from '../types/appointment.typ
 const LIMIT = 20;
 
 export const AppointmentsListPage = () => {
+    const location = useLocation();
+
     // Filters
     const [selectedDate, setSelectedDate] = useState(new Date().toISOString().split('T')[0]);
     const [statusFilter, setStatusFilter] = useState('');
     const [page, setPage] = useState(1);
+
+    
+    useEffect(() => {
+        if (location.state?.successMsg) {
+            toast.success(location.state.successMsg);
+            // Clear state so toast doesn't show on refresh
+            window.history.replaceState({}, document.title);
+        }
+    }, [location.state]);
 
     // Appointments data
     const [appointments, setAppointments] = useState<Appointment[]>([]);
