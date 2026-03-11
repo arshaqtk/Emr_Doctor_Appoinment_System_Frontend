@@ -15,6 +15,7 @@ interface AppointmentTableProps {
     page: number;
     limit: number;
     onPageChange: (p: number) => void;
+    onMarkArrived?: (id: string) => void;
 }
 
 const formatDate = (d: string) =>
@@ -31,6 +32,7 @@ export const AppointmentTable = ({
     page,
     limit,
     onPageChange,
+    onMarkArrived,
 }: AppointmentTableProps) => {
     const totalPages = Math.ceil(total / limit);
 
@@ -64,6 +66,7 @@ export const AppointmentTable = ({
                         <th className="text-left px-5 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wide">Mobile</th>
                         <th className="text-left px-5 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wide">Purpose</th>
                         <th className="text-left px-5 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wide">Status</th>
+                        <th className="text-right px-5 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wide">Actions</th>
                     </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-50">
@@ -111,6 +114,16 @@ export const AppointmentTable = ({
                                     <span className={`inline-block text-xs font-bold px-2.5 py-1 rounded-full border ${STATUS_BADGE[appt.status] ?? 'bg-gray-50 text-gray-600 border-gray-200'}`}>
                                         {appt.status}
                                     </span>
+                                </td>
+                                <td className="px-5 py-3.5 text-right">
+                                    {appt.status === 'BOOKED' && onMarkArrived && (
+                                        <button
+                                            onClick={() => onMarkArrived(appt._id)}
+                                            className="px-3 py-1 bg-green-600 text-white rounded text-xs font-bold hover:bg-green-700 transition-colors shadow-sm"
+                                        >
+                                            Mark Arrived
+                                        </button>
+                                    )}
                                 </td>
                             </tr>
                         ))

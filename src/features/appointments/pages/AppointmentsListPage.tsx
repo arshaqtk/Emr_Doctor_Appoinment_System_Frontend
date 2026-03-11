@@ -4,6 +4,7 @@ import { toast } from 'react-hot-toast';
 import api from '@/lib/api';
 import { AppointmentFilters } from '../components/AppointmentFilters';
 import { AppointmentTable } from '../components/AppointmentTable';
+import { appointmentService } from '../services/appointment.api';
 import type { Appointment, AppointmentsResponse } from '../types/appointment.types';
 
 const LIMIT = 20;
@@ -59,6 +60,16 @@ export const AppointmentsListPage = () => {
         setStatusFilter('');
     };
 
+    const handleMarkArrived = async (id: string) => {
+        try {
+            await appointmentService.markArrived(id);
+            toast.success('Patient marked as arrived!');
+            fetchAppointments();
+        } catch (err: any) {
+            toast.error(err.response?.data?.message || 'Failed to update status');
+        }
+    };
+
     return (
         <div className="p-6 max-w-6xl mx-auto space-y-5">
             <div>
@@ -83,6 +94,7 @@ export const AppointmentsListPage = () => {
                 page={page}
                 limit={LIMIT}
                 onPageChange={setPage}
+                onMarkArrived={handleMarkArrived}
             />
         </div>
     );
