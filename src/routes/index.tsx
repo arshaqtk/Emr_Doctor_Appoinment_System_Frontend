@@ -1,5 +1,6 @@
 import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { LoginPage } from '@/features/auth/pages/LoginPage'
+import { GlobalErrorBoundary } from '@/components/GlobalErrorBoundary'
 import { RootRedirect } from './RootRedirect'
 import { ProtectedRoute } from './ProtectedRoute'
 import { RoleProtectedRoute } from './RoleProtectedRoute'
@@ -17,10 +18,12 @@ export const router = createBrowserRouter([
     {
         path: '/login',
         element: <LoginPage />,
+        errorElement: <GlobalErrorBoundary />,
     },
     {
         path: '/',
         element: <ProtectedRoute />,
+        errorElement: <GlobalErrorBoundary />,
         children: [
             {
                 element: <MainLayout />,

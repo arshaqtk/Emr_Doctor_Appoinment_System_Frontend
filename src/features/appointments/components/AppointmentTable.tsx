@@ -79,7 +79,7 @@ export const AppointmentTable = ({
                                 </div>
                             </td>
                         </tr>
-                    ) : appointments.length === 0 ? (
+                    ) : (appointments || []).length === 0 ? (
                         <tr>
                             <td colSpan={6} className="py-16 text-center">
                                 <div className="flex flex-col items-center gap-2">
