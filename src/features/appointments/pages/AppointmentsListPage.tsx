@@ -17,7 +17,7 @@ export const AppointmentsListPage = () => {
     const [statusFilter, setStatusFilter] = useState('');
     const [page, setPage] = useState(1);
 
-
+    
     useEffect(() => {
         if (location.state?.successMsg) {
             toast.success(location.state.successMsg);

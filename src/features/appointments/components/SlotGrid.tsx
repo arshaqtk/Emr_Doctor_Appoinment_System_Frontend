@@ -27,7 +27,7 @@ export const SlotGrid = ({ slots, selectedTime, isLoading, error, onSelect }: Sl
         );
     }
 
-    if (slots.length === 0) {
+    if ((slots || []).length === 0) {
         return (
             <div className="py-10 text-center">
                 <p className="text-gray-500 font-medium text-sm">No slots available for this date</p>
@@ -44,11 +44,11 @@ export const SlotGrid = ({ slots, selectedTime, isLoading, error, onSelect }: Sl
             <div className="flex items-center gap-4 text-xs text-gray-500">
                 <span className="flex items-center gap-1.5">
                     <span className="w-3 h-3 rounded-full bg-green-200 border border-green-400 inline-block" />
-                    Available ({available.length})
+                    Available ({(available || []).length})
                 </span>
                 <span className="flex items-center gap-1.5">
                     <span className="w-3 h-3 rounded-full bg-gray-200 border border-gray-300 inline-block" />
-                    Booked ({booked.length})
+                    Booked ({(booked || []).length})
                 </span>
             </div>
 

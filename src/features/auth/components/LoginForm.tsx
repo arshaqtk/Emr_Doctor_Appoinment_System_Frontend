@@ -12,7 +12,6 @@ interface LoginFormProps {
 export const LoginForm = ({ onSubmit, isLoading, error }: LoginFormProps) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [keepLoggedIn, setKeepLoggedIn] = useState(false)
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
@@ -54,20 +53,6 @@ export const LoginForm = ({ onSubmit, isLoading, error }: LoginFormProps) => {
                     </a>
                 }
             />
-
-            <div className="flex items-center">
-                <input
-                    id="keep-logged-in"
-                    type="checkbox"
-                    className="w-4 h-4 text-primary-500 bg-white border-gray-300 rounded focus:ring-primary-500 focus:ring-2 cursor-pointer"
-                    checked={keepLoggedIn}
-                    onChange={(e) => setKeepLoggedIn(e.target.checked)}
-                />
-                <label htmlFor="keep-logged-in" className="ml-2 text-sm text-gray-600 cursor-pointer select-none">
-                    Keep me logged in on this device
-                </label>
-            </div>
-
             <Button type="submit" isLoading={isLoading} fullWidth>
                 Log In to Portal
             </Button>

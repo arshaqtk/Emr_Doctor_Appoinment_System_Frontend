@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { toast } from 'react-hot-toast';
 import { doctorScheduleApi } from '../services/doctorSchedule.api';
 import type { DoctorOption, DoctorSchedule, Slot, UpdateSchedulePayload } from '../types/schedule.types';
 import { DoctorScheduleCalendar } from '../components/DoctorScheduleCalendar';
@@ -85,12 +86,12 @@ export const DoctorSchedulePage = () => {
             const updated = await doctorScheduleApi.updateDoctorSchedule(selectedDoctorId, payload);
             setScheduleData(updated);
 
-            // Reload slots since schedule changed
+           
             const newData = await doctorScheduleApi.getSlotsByDate(selectedDoctorId, selectedDate);
             setSlots(newData || []);
 
-            // Quick native alert for success, or replace with toast in future
-            alert('Schedule updated successfully!');
+            
+            toast.success('Schedule updated successfully!');
         } catch (err: any) {
             setError(err.response?.data?.message || 'Failed to update schedule');
         } finally {

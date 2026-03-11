@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { toast } from 'react-hot-toast';
 import type { DoctorProfile, CreateDoctorProfilePayload, User } from '../types/admin.types';
 import { adminApi } from '../services/admin.api';
 import { DoctorTable } from '../components/DoctorTable';
@@ -39,7 +40,7 @@ export const ManageDoctorsPage = () => {
             await adminApi.updateAvailability(id, { isActive: !currentIsActive } as any);
             loadData();
         } catch (err: any) {
-            alert('Failed to update status');
+            toast.error('Failed to update status');
         }
     };
 
@@ -61,7 +62,7 @@ export const ManageDoctorsPage = () => {
             setEditingDoctor(null);
             loadData();
         } catch (err: any) {
-            alert(err.response?.data?.message || `Failed to ${editingDoctor ? 'update' : 'create'} doctor profile`);
+            toast.error(err.response?.data?.message || `Failed to ${editingDoctor ? 'update' : 'create'} doctor profile`);
         } finally {
             setIsLoading(false);
         }
