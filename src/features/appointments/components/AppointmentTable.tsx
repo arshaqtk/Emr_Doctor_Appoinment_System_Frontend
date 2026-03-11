@@ -16,6 +16,7 @@ interface AppointmentTableProps {
     limit: number;
     onPageChange: (p: number) => void;
     onMarkArrived?: (id: string) => void;
+    showDoctor?: boolean;
 }
 
 const formatDate = (d: string) =>
@@ -33,6 +34,7 @@ export const AppointmentTable = ({
     limit,
     onPageChange,
     onMarkArrived,
+    showDoctor = false,
 }: AppointmentTableProps) => {
     const totalPages = Math.ceil(total / limit);
 
@@ -61,6 +63,9 @@ export const AppointmentTable = ({
                 <thead className="bg-gray-50 border-b border-gray-100">
                     <tr>
                         <th className="text-left px-5 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wide">Time</th>
+                        {showDoctor && (
+                            <th className="text-left px-5 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wide">Doctor</th>
+                        )}
                         <th className="text-left px-5 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wide">Patient</th>
                         <th className="text-left px-5 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wide">Patient ID</th>
                         <th className="text-left px-5 py-3.5 text-xs font-semibold text-gray-500 uppercase tracking-wide">Mobile</th>
@@ -72,7 +77,7 @@ export const AppointmentTable = ({
                 <tbody className="divide-y divide-gray-50">
                     {isLoading ? (
                         <tr>
-                            <td colSpan={6} className="py-16 text-center">
+                            <td colSpan={showDoctor ? 8 : 7} className="py-16 text-center">
                                 <div className="flex flex-col items-center gap-3 text-gray-400">
                                     <svg className="animate-spin h-7 w-7 text-blue-500" fill="none" viewBox="0 0 24 24">
                                         <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
@@ -84,7 +89,7 @@ export const AppointmentTable = ({
                         </tr>
                     ) : (appointments || []).length === 0 ? (
                         <tr>
-                            <td colSpan={6} className="py-16 text-center">
+                            <td colSpan={showDoctor ? 8 : 7} className="py-16 text-center">
                                 <div className="flex flex-col items-center gap-2">
                                     <svg className="w-12 h-12 text-gray-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -100,6 +105,12 @@ export const AppointmentTable = ({
                         appointments.map(appt => (
                             <tr key={appt._id} className="hover:bg-gray-50 transition-colors">
                                 <td className="px-5 py-3.5 font-mono font-semibold text-gray-800">{appt.time}</td>
+                                {showDoctor && (
+                                    <td className="px-5 py-3.5">
+                                        <div className="font-medium text-gray-900">{appt.doctor?.user?.name || 'Unknown'}</div>
+                                        <div className="text-[10px] text-gray-400 uppercase tracking-tighter">{appt.doctor?.department}</div>
+                                    </td>
+                                )}
                                 <td className="px-5 py-3.5 font-medium text-gray-900">{appt.patient?.name}</td>
                                 <td className="px-5 py-3.5">
                                     <span className="bg-blue-50 text-blue-700 text-xs font-semibold px-2 py-0.5 rounded">

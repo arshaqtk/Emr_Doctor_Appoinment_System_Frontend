@@ -95,6 +95,7 @@ export const AppointmentsListPage = () => {
                 limit={LIMIT}
                 onPageChange={setPage}
                 onMarkArrived={handleMarkArrived}
+                showDoctor={true}
             />
         </div>
     );
