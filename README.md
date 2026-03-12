@@ -168,7 +168,6 @@ npm run preview
 | Role | Access Level |
 |---|---|
 | `SUPER_ADMIN` | Full access — manage doctors, users, all features |
-| `ADMIN` | Standard admin access |
 | `DOCTOR` | Doctor-specific view only (My Appointments, My Schedule) |
 | `RECEPTIONIST` | Patient management, appointment booking |
 | `PATIENT` | Patient-facing pages |
